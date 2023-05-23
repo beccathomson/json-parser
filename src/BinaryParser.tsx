@@ -20,9 +20,6 @@ const parseBinaryTree = (arr: ParserInputType): BinTreeNode | null => {
     if (!arr) {
       return null;
     }
-
-    console.log(typeof arr)
-
     const [id, leftChild, rightChild] = arr;
 
     const node: BinTreeNode = {

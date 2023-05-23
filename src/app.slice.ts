@@ -21,7 +21,9 @@ const initialState: AppState = {
     reducers: {
       setInput(state: AppState, action: PayloadAction<string | undefined>) {
         state.input = action.payload ?? ""
-        console.log(state.input)
+      },
+      clearFileInput(state: AppState) {
+        state.input = "";
       },
       setOutput(state: AppState, action: PayloadAction<string | undefined>) {
         state.output = action.payload ?? ""
@@ -34,6 +36,6 @@ const initialState: AppState = {
 
   
 
-  export const { setInput, setOutput, setBinaryTree } = appSlice.actions;
+  export const { setInput, setOutput, setBinaryTree, clearFileInput } = appSlice.actions;
   export default appSlice.reducer;
   

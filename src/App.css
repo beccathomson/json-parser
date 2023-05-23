@@ -36,3 +36,15 @@
     transform: rotate(360deg);
   }
 }
+
+.valid {
+  outline: green 2px solid;
+}
+
+
+.invalid {
+  outline: red 2px solid;
+}
+pre {
+  border-radius: 2px
+}

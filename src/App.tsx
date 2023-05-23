@@ -1,15 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import FileUpload from './FileUpload';
-import { selectAppState } from './app.slice';
+import { clearFileInput, selectAppState } from './app.slice';
 import { BinTreeNode, parseTree } from './BinaryParser';
+import Tree from 'react-d3-tree';
+import './App.css';
+
 import VisualTree from './VisualTree';
 
 const App = (): JSX.Element => {
 
+  const dispatch = useDispatch();
+
   const fileInput = useSelector(selectAppState)?.input;
   const [jsonText, setJsonText] = useState("");
-  const [isValidJson, setIsValidJson] = useState(false);
+  const [isValidJson, setIsValidJson] = useState(true);
   const [binaryTree, setBinaryTree] = useState<BinTreeNode | null>(null);
   const [output, setOutput] = useState<BinTreeNode | null>();
 
@@ -30,13 +35,19 @@ const App = (): JSX.Element => {
   };
 
   useEffect(() => {
+    if (!fileInput)
+      return
     handleNewText(fileInput)
+    dispatch(clearFileInput());
   },[fileInput])
 
   useEffect(() => { // set valid output only
     if (isValidJson) {
-      setOutput(parseTree(jsonText))
-      setBinaryTree(parseTree(jsonText))
+      const treeOutput = parseTree(jsonText);
+      if (treeOutput) {
+        setOutput(treeOutput)
+        setBinaryTree(treeOutput)
+      }
     }
   },[jsonText])
 
@@ -46,7 +57,7 @@ const App = (): JSX.Element => {
       <div className="outputArea">
       <pre
           contentEditable
-          onKeyDown={handleUserInput}
+          onInput={handleUserInput}
           className={isValidJson ? 'valid' : 'invalid'}
         >{JSON.stringify(output, null, 2)}</pre>
       </div>
