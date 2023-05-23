@@ -57,7 +57,7 @@ const App = (): JSX.Element => {
   return (
     <div>
       <FileUpload />
-      <div className="outputArea">
+      <div>
       <pre
           contentEditable
           onInput={handleUserInput}

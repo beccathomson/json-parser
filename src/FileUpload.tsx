@@ -29,9 +29,19 @@ const FileUpload = (): JSX.Element => {
   };
 
   return (
-    <div>
-      <input type="file" onChange={handleFileChange} />
-      <Button onClick={handleUploadClick}>Fetch</Button>
+    <div className="buttonSection">
+      <Button
+    variant="contained"
+    component="label"
+  >
+    Upload File
+    <input
+      type="file"
+      hidden
+      onChange={handleFileChange}
+    />
+  </Button>
+      <Button variant="contained" onClick={handleUploadClick}>Fetch</Button>
     </div>
   );
 };
