@@ -1,17 +1,22 @@
-import reducer, { AppState } from './app.slice';
-import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
+import { combineReducers, configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
+import appReducer from "./app.slice";
 
 export interface RootState {
-  appState: AppState;
+  app: ReturnType<typeof appReducer>;
 }
-export type ReducerMap = Partial<RootState>;
 
-const store = configureStore({
-    reducer,
-    middleware: [...getDefaultMiddleware({ immutableCheck: false, serializableCheck: false })],
+const rootReducer = combineReducers({
+  app: appReducer,
 });
 
+const store = configureStore({
+  reducer: rootReducer,
+  middleware: getDefaultMiddleware({
+    immutableCheck: false,
+    serializableCheck: false,
+  }),
+});
 
 export type AppDispatch = typeof store.dispatch;
 export const useAppDispatch = () => useDispatch<AppDispatch>();
