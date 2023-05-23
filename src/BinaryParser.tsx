@@ -7,6 +7,7 @@ export interface BinTreeNode {
   id: string | number;
   left?: BinTreeNode | null;
   right?: BinTreeNode | null;
+  isSubtree?: boolean
 }
 
 interface BinaryParserProps {

@@ -1,5 +1,6 @@
 import React from 'react';
 import { BinTreeNode } from './BinaryParser';
+import { findDeepestSubtree, markNodesAsGreen } from './SubtreeParser';
 
 
 interface VisualTreeProps {
@@ -7,10 +8,13 @@ interface VisualTreeProps {
 }
 
 const BinTreeNodeSquare: React.FC<{ node: BinTreeNode }> = ({ node }) => {
+
+    const color = node.isSubtree ? "green" : "black";
+    
   return (
     <div
       style={{
-        border: '1px solid black',
+        border: `1px solid ${color}`,
         width: '50px',
         height: '50px',
         display: 'flex',
@@ -25,6 +29,12 @@ const BinTreeNodeSquare: React.FC<{ node: BinTreeNode }> = ({ node }) => {
 };
 
 const VisualTree: React.FC<VisualTreeProps> = ({ rootNode }) => {
+
+    const deepestSubtree = rootNode ? findDeepestSubtree(rootNode): null;
+    if (deepestSubtree) {
+      markNodesAsGreen(deepestSubtree);
+    }
+
     const renderBinaryTreeNode = (node: BinTreeNode | null) => {
       if (!node) {
         return null;

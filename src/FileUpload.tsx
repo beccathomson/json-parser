@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { setInput } from './app.slice';
 import { useDispatch } from 'react-redux';
 
+import { Button } from '@mui/material';
+
 const FileUpload = (): JSX.Element => {
   const [selectedFile, setSelectedFile] = useState(null);
   const dispatch = useDispatch();
@@ -29,7 +31,7 @@ const FileUpload = (): JSX.Element => {
   return (
     <div>
       <input type="file" onChange={handleFileChange} />
-      <button onClick={handleUploadClick}>Fetch</button>
+      <Button onClick={handleUploadClick}>Fetch</Button>
     </div>
   );
 };

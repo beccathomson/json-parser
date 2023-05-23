@@ -3,10 +3,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import FileUpload from './FileUpload';
 import { clearFileInput, selectAppState } from './app.slice';
 import { BinTreeNode, parseTree } from './BinaryParser';
-import Tree from 'react-d3-tree';
+import { Button } from '@mui/material';
 import './App.css';
 
 import VisualTree from './VisualTree';
+import { findDeepestSubtree, markNodesAsGreen } from './SubtreeParser';
 
 const App = (): JSX.Element => {
 
@@ -50,6 +51,8 @@ const App = (): JSX.Element => {
       }
     }
   },[jsonText])
+
+
 
   return (
     <div>
