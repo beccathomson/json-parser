@@ -14,7 +14,7 @@ pre {
 code:focus {
   outline: none;
 }
-.buttonSection{
+.buttonSection {
   display: flex;
   justify-content: space-between;
   width: 600px;

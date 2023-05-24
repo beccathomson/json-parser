@@ -5,12 +5,15 @@ import { Button } from '@mui/material';
 
 const FileUpload = (): JSX.Element => {
   const [selectedFile, setSelectedFile] = useState<File>();
+  const [fileName, setFileName] = useState<string>('');
   const dispatch = useDispatch();
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
-    if (file)
+    if (file) {
       setSelectedFile(file);
+      setFileName(file.name);
+    }
   };
 
   const handleUploadClick = () => {
@@ -28,15 +31,19 @@ const FileUpload = (): JSX.Element => {
 
   return (
     <div className="buttonSection">
-      <Button variant="contained" component="label">
-        Upload File
-        <input type="file" hidden onChange={handleFileChange} />
-      </Button>
+      <div style={{display: 'flex'}}>
+        <Button variant="contained" component="label">
+          Upload File
+          <input type="file" hidden onChange={handleFileChange} />
+        </Button>
+        <div style={{ paddingLeft: '4px' }}>{fileName}</div>
+      </div>
       <Button disabled={!selectedFile} variant="contained" onClick={handleUploadClick}>
         Fetch
       </Button>
     </div>
   );
+  
 };
 
 export default FileUpload;

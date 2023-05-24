@@ -1,47 +1,53 @@
-## Binary Tree Visualization
+# JSON Parser for Binary Trees
 
-This is a simple React application that allows you to visualize a binary tree structure. It provides a graphical representation of the binary tree, highlighting the deepest subtree with a green color.
+This repository contains a solution for a coding assignment given by Microsoft for a frontend engineer position. The assignment involves parsing JSON data into a binary tree data structure and creating a web application to visualize the tree.
 
-**Start the application:**
-npm start
+## Table of Contents
 
+1. [Installation](#installation)
+2. [Usage](#usage)
+3. [Testing](#testing)
 
-### Usage
+## Installation
 
-Upload a JSON file containing binary tree data. The JSON file should have the following structure:
+To install and run this project, you will need Node.js and npm installed on your machine. Follow these steps:
 
-```json
-{
-  "id": "root",
-  "left": {
-    "id": "left_child",
-    "left": null,
-    "right": null
-  },
-  "right": {
-    "id": "right_child",
-    "left": null,
-    "right": null
-  }
-}
-```
+1. Clone this repository:
+   ```
+   git clone https://github.com/beccathomson/json-parser.git
+   ```
+2. Navigate into the project directory:
+   ```
+   cd json-parser
+   ```
+3. Install the dependencies:
+   ```
+   npm install
+   ```
+4. Start the application:
+   ```
+   npm start
+   ```
 
-The binary tree visualization will be displayed, with the deepest subtree highlighted in green.
+The application should now be running at `http://localhost:3000`.
 
 ![image](https://github.com/beccathomson/json-parser/assets/25671002/e9879b97-4ca0-4f82-a488-1396d11b3654)
 
-You can interact with the tree by editing the JSON text on the page.
 
-image.png
+## Usage
 
-### Project Structure
-- src/components/VisualTree.tsx: This component handles the rendering of the binary tree visualization. It uses the BinTreeNodeSquare component to render individual nodes and applies styling to highlight the deepest subtree.
-- src/components/BinTreeNodeSquare.tsx: This component represents an individual node in the binary tree. It receives the node data and level as props and renders a square element with the node value.
-- src/utils/BinaryParser.ts: This module provides utility functions for parsing and working with binary tree data. It includes the parseTree function for parsing JSON data into a binary tree structure.
-- src/utils/SubtreeParser.ts: This module contains the logic for finding the deepest subtree in a binary tree and marking the nodes as part of the subtree.
-- src/App.tsx: The main entry point of the application. It handles file uploads, manages the state, and renders the components.
+The application allows you to input JSON data in a specific format and displays the corresponding binary tree. The input data should be an array representing a binary tree, where each element is a triplet `[id, leftChild, rightChild]`.
 
-### Testing
-- Unit tests have been implemented for the main methods of BinaryParser and SubTreeParser
-- To run the tests, use the following command:
+For example, the input `["a", ["b"], ["c"]]` represents a binary tree with root "a" and two children "b" and "c".
+
+You can input the data manually or upload a file containing the data. The application will parse the data and display the binary tree. You can also edit the JSON data and the tree will update in real time.
+
+## Testing
+
+To run the tests for this project, use the following command:
+
+```
 npm test
+```
+
+---
