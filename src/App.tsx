@@ -1,70 +1,71 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import FileUpload from './FileUpload';
-import { clearFileInput, selectAppState } from './app.slice';
-import { BinTreeNode, parseTree } from './BinaryParser';
-import { Button } from '@mui/material';
+import { selectAppState, setBinaryTree } from './app.slice';
+import { BinTreeNode, parseTree, parseTreeFromJson } from './BinaryParser';
+import VisualTree from './VisualTree';
 import './App.css';
 
-import VisualTree from './VisualTree';
-import { findDeepestSubtree, markNodesAsGreen } from './SubtreeParser';
-
 const App = (): JSX.Element => {
-
-  const dispatch = useDispatch();
-
   const fileInput = useSelector(selectAppState)?.input;
-  const [jsonText, setJsonText] = useState("");
-  const [isValidJson, setIsValidJson] = useState(true);
+  const [jsonText, setJsonText] = useState<string>("");
+  const [isValidJson, setIsValidJson] = useState<boolean>(true);
   const [binaryTree, setBinaryTree] = useState<BinTreeNode | null>(null);
-  const [output, setOutput] = useState<BinTreeNode | null>();
+  const [output, setOutput] = useState<BinTreeNode | null>(null);
 
-  const handleNewText = (text: string) => { // set isValidJson, sets input
+  const handleNewText = (text: string): void => {
     try {
-      const parsed = JSON.parse(text);
+      JSON.parse(text);
       setIsValidJson(true);
-      setJsonText(parsed);
+      setJsonText(text);
     } catch (error) {
       setIsValidJson(false);
     }
   }
 
-  //@ts-ignore
-  const handleUserInput = (event) => {
-    const newText = event.target.textContent;
-    handleNewText(newText)
+  let typingTimer: NodeJS.Timeout | null = null;
+  // wait 1 second after user stops typing
+
+  const handleUserInput = (event: React.ChangeEvent<HTMLPreElement>): void => {
+
+    if (typingTimer) {
+      clearTimeout(typingTimer);
+    }
+    
+    typingTimer = setTimeout(() => handleNewText(event.target.textContent ?? ""), 1000);
+  
   };
 
   useEffect(() => {
-    if (!fileInput)
-      return
-    handleNewText(fileInput)
-    dispatch(clearFileInput());
-  },[fileInput])
+    const treeOutput = parseTree(fileInput); // Trim the JSON string to remove leading/trailing whitespaces
+    if (treeOutput) {
+      setOutput(treeOutput);
+      setBinaryTree(treeOutput);
+    }
+  }, [fileInput]);
 
-  useEffect(() => { // set valid output only
+  useEffect(() => {
     if (isValidJson) {
-      const treeOutput = parseTree(jsonText);
+      const treeOutput = parseTreeFromJson(jsonText.trim()); // Trim the JSON string to remove leading/trailing whitespaces
       if (treeOutput) {
-        setOutput(treeOutput)
-        setBinaryTree(treeOutput)
+        setOutput(treeOutput);
+        setBinaryTree(treeOutput);
       }
     }
-  },[jsonText])
-
-
+  }, [jsonText]);
 
   return (
     <div>
       <FileUpload />
       <div className="outputArea">
-      <pre
+      {fileInput && <pre
           contentEditable
           onInput={handleUserInput}
           className={isValidJson ? 'valid' : 'invalid'}
-        >{JSON.stringify(output, null, 2)}</pre>
+          >{JSON.stringify(output, null, 2)}</pre>}
+
       </div>
-      {binaryTree && <VisualTree rootNode={binaryTree} />}
+      {binaryTree && <VisualTree binaryTree={binaryTree} />}
     </div>
   );
 };

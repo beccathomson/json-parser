@@ -1,58 +1,56 @@
 import React from 'react';
 import { BinTreeNode } from './BinaryParser';
-import { findDeepestSubtree, markNodesAsGreen } from './SubtreeParser';
+import { markSmallestDeepestSubtree } from './SubtreeParser';
 
-
-interface VisualTreeProps {
-  rootNode: BinTreeNode;
+interface BinTreeNodeSquareProps {
+  node: BinTreeNode;
+  level: number;
 }
 
-const BinTreeNodeSquare: React.FC<{ node: BinTreeNode }> = ({ node }) => {
+const BinTreeNodeSquare: React.FC<BinTreeNodeSquareProps> = ({ node, level }) => {
+  const color = node.isSubtree ? "green" : "black";
+  const style = {
+    border: `2px solid ${color}`,
+    width: '50px',
+    height: '50px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    margin: '5px',
+    marginLeft: level * 10, // Adjust the marginLeft based on the level
+  };
 
-    const color = node.isSubtree ? "green" : "black";
-    
   return (
-    <div
-      style={{
-        border: `1px solid ${color}`,
-        width: '50px',
-        height: '50px',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        margin: '5px',
-      }}
-    >
-      {node.id}
+    <div style={style}>
+      {node.id === null ? 'null' : node.id}
     </div>
   );
 };
 
-const VisualTree: React.FC<VisualTreeProps> = ({ rootNode }) => {
+const VisualTree: React.FC<{ binaryTree: BinTreeNode }> = ({ binaryTree }) => {
+  if (!binaryTree) {
+    return <div></div>;
+  }
+ 
+  const [markedRoot, maxDepth] = markSmallestDeepestSubtree(binaryTree);
 
-    const deepestSubtree = rootNode ? findDeepestSubtree(rootNode): null;
-    if (deepestSubtree) {
-      markNodesAsGreen(deepestSubtree);
+  const renderBinaryTreeNode = (node: BinTreeNode | null | undefined, level: number): JSX.Element | null => {
+    if (!node || level === maxDepth) {
+      return null;
     }
 
-    const renderBinaryTreeNode = (node: BinTreeNode | null) => {
-      if (!node) {
-        return null;
-      }
-  
-      return (
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <BinTreeNodeSquare node={node} level={level} />
         <div style={{ display: 'flex' }}>
-          <BinTreeNodeSquare node={node} />
-          <div style={{ display: 'flex', flexDirection: 'column' }}>
-          {node.left && renderBinaryTreeNode(node.left)}
-          {node.right && renderBinaryTreeNode(node.right)}
+          {renderBinaryTreeNode(node.left, level + 1)}
+          {renderBinaryTreeNode(node.right, level + 1)}
         </div>
-        </div>
-
-      );
-    };
-  
-    return <div>{renderBinaryTreeNode(rootNode)}</div>;
+      </div>
+    );
   };
+
+  return <div>{renderBinaryTreeNode(markedRoot, 0)}</div>;
+};
 
 export default VisualTree;

@@ -20,7 +20,7 @@ const FileUpload = (): JSX.Element => {
       reader.onload = (event) => {
         const fileContent = event?.target?.result;
         if (fileContent) {
-          dispatch(setInput(fileContent as string));
+          dispatch(setInput(fileContent.toString()));
         }        
       };
 
@@ -29,9 +29,19 @@ const FileUpload = (): JSX.Element => {
   };
 
   return (
-    <div>
-      <input type="file" onChange={handleFileChange} />
-      <Button onClick={handleUploadClick}>Fetch</Button>
+    <div className="buttonSection">
+      <Button
+    variant="contained"
+    component="label"
+  >
+    Upload File
+    <input
+      type="file"
+      hidden
+      onChange={handleFileChange}
+    />
+  </Button>
+      <Button variant="contained" onClick={handleUploadClick}>Fetch</Button>
     </div>
   );
 };
