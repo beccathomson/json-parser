@@ -21,8 +21,13 @@ const parseBinaryTreeFromJson = (data: any): BinTreeNode | null => {
     id: id !== undefined ? id : null,
   };
 
-  node.left = parseBinaryTreeFromJson(left);
-  node.right = parseBinaryTreeFromJson(right);
+  if (left !== undefined) {
+    node.left = parseBinaryTreeFromJson(left);
+  }
+
+  if (right !== undefined) {
+    node.right = parseBinaryTreeFromJson(right);
+  }
 
   return node;
 };
@@ -65,6 +70,7 @@ export const parseTreeFromJson = (jsonString: string): BinTreeNode | null => {
     parsedInput = JSON.parse(jsonString);
   } catch (error) {
     console.error('Error parsing JSON string:', error);
+    return null;
   }
 
   const parsedTree = parseBinaryTreeFromJson(parsedInput);

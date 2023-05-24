@@ -12,7 +12,7 @@ describe("markDeepestSubtree", () => {
           id: 4,
           left: {
             id: 7,
-            left: null,
+            left: {id: 11},
             right: {
                 id: 8
             }
@@ -31,17 +31,17 @@ describe("markDeepestSubtree", () => {
       },
     };
 
-    const [markedTree, maxDepth] = markDeepestSubtree(root);
-    console.log(markedTree)
+    const maxDepth = markDeepestSubtree(root);
+    console.log(root.left?.left?.left);
 
     // Assert that the markedTree has the correct markings
-    expect(isMarked(markedTree)).toBe(false); // Root node should not be marked
-    expect(isMarked(markedTree.left?.left?.left)).toBe(true); // Subtree with depth 4 should be marked
-    expect(isMarked(markedTree.right)).toBe(false); // Subtree with depth 3 should not be marked
-    expect(isMarked(markedTree.right?.right)).toBe(false); // Subtree with depth 1 should be marked
+    expect(isMarked(root)).toBe(false); // Root node should not be marked
+    expect(isMarked(root.left?.left?.left)).toBe(true); // Subtree that is parent of leaf nodes with max depth 5 should be marked
+    expect(isMarked(root.right)).toBe(false); // Subtree with depth 3 should not be marked
+    expect(isMarked(root.right?.right)).toBe(false); // Subtree with depth 1 should be marked
 
     // Assert that the maxDepth is correct
-    expect(maxDepth).toBe(4);
+    expect(maxDepth).toBe(5);
   });
 });
 

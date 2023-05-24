@@ -32,7 +32,7 @@ const VisualTree: React.FC<{ binaryTree: BinTreeNode }> = ({ binaryTree }) => {
     return <div></div>;
   }
  
-  const [markedRoot, maxDepth] = markDeepestSubtree(binaryTree);
+  const maxDepth = markDeepestSubtree(binaryTree);
 
   const renderBinaryTreeNode = (node: BinTreeNode | null | undefined, level: number): JSX.Element | null => {
     if (!node || level === maxDepth) {
@@ -50,7 +50,7 @@ const VisualTree: React.FC<{ binaryTree: BinTreeNode }> = ({ binaryTree }) => {
     );
   };
 
-  return <div>{renderBinaryTreeNode(markedRoot, 0)}</div>;
+  return <div>{renderBinaryTreeNode(binaryTree, 0)}</div>;
 };
 
 export default VisualTree;

@@ -1,6 +1,6 @@
 import { BinTreeNode } from "./BinaryParser";
 
-export function markDeepestSubtree(root: BinTreeNode): [BinTreeNode, number] {
+export function markDeepestSubtree(root: BinTreeNode): number {
     let maxDepth = 0;
     let deepestSubtreeRoot: BinTreeNode | null = null;
   
@@ -22,7 +22,7 @@ export function markDeepestSubtree(root: BinTreeNode): [BinTreeNode, number] {
   
     dfs(root, 0);
     markSubtree(deepestSubtreeRoot);
-    return [root, maxDepth];
+    return maxDepth;
   }
   
   function markSubtree(node: BinTreeNode| undefined | null): void {
