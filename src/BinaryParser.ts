@@ -59,7 +59,6 @@ const parseBinaryTree = (arr: ParserInputType): BinTreeNode | null => {
   return node;
 };
 
-// function takes BinTreeNode json representation and return BinTreeNode object
 export const parseTreeFromJson = (jsonString: string): BinTreeNode | null => {
   if (!jsonString) {
     return null;
@@ -77,7 +76,6 @@ export const parseTreeFromJson = (jsonString: string): BinTreeNode | null => {
   return parsedTree;
 };
 
-// function takes initial file input array and returns BinTreeNode tree
 export const parseTree = (fileInput: string): BinTreeNode | null => {
   if (!fileInput) {
     return null;
@@ -85,14 +83,12 @@ export const parseTree = (fileInput: string): BinTreeNode | null => {
 
   let parsedInput: ParserInputType | null = null;
   try {
-    parsedInput = JSON.parse(fileInput ) as ParserInputType;
+    parsedInput = JSON.parse(fileInput) as ParserInputType;
   } catch (error) {
     console.error('Error parsing JSON string:', error);
-    return null
+    return null;
   }
 
   const parsedTree = parseBinaryTree(parsedInput);
   return parsedTree;
 };
-
-export default parseTree;

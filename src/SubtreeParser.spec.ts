@@ -32,7 +32,6 @@ describe("markDeepestSubtree", () => {
     };
 
     const maxDepth = markDeepestSubtree(root);
-    console.log(root.left?.left?.left);
 
     // Assert that the markedTree has the correct markings
     expect(isMarked(root)).toBe(false); // Root node should not be marked
