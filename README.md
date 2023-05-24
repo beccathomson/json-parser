@@ -28,6 +28,8 @@ Upload a JSON file containing binary tree data. The JSON file should have the fo
 
 The binary tree visualization will be displayed, with the deepest subtree highlighted in green.
 
+![image](https://github.com/beccathomson/json-parser/assets/25671002/e9879b97-4ca0-4f82-a488-1396d11b3654)
+
 You can interact with the tree by editing the JSON text on the page.
 
 image.png
