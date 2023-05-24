@@ -1,46 +1,43 @@
-# Getting Started with Create React App
+## Binary Tree Visualization
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is a simple React application that allows you to visualize a binary tree structure. It provides a graphical representation of the binary tree, highlighting the deepest subtree with a green color.
 
-## Available Scripts
+**Start the application:**
+npm start
 
-In the project directory, you can run:
 
-### `npm start`
+### Usage
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Upload a JSON file containing binary tree data. The JSON file should have the following structure:
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+```json
+{
+  "id": "root",
+  "left": {
+    "id": "left_child",
+    "left": null,
+    "right": null
+  },
+  "right": {
+    "id": "right_child",
+    "left": null,
+    "right": null
+  }
+}
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+The binary tree visualization will be displayed, with the deepest subtree highlighted in green.
 
-### `npm run build`
+You can interact with the tree by editing the JSON text on the page.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Project Structure
+-- src/components/VisualTree.tsx: This component handles the rendering of the binary tree visualization. It uses the BinTreeNodeSquare component to render individual nodes and applies styling to highlight the deepest subtree.
+-- src/components/BinTreeNodeSquare.tsx: This component represents an individual node in the binary tree. It receives the node data and level as props and renders a square element with the node value.
+-- src/utils/BinaryParser.ts: This module provides utility functions for parsing and working with binary tree data. It includes the parseTree function for parsing JSON data into a binary tree structure.
+-- src/utils/SubtreeParser.ts: This module contains the logic for finding the deepest subtree in a binary tree and marking the nodes as part of the subtree.
+-- src/App.tsx: The main entry point of the application. It handles file uploads, manages the state, and renders the components.
+Testing
+-- Unit tests have been implemented for the findDeepestSubtree and markNodesAsGreen functions in the SubtreeParser.ts module. The tests cover various scenarios and edge cases to ensure the correct behavior of the functions.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+To run the tests, use the following command:
+npm test

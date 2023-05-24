@@ -45,6 +45,13 @@
 .invalid {
   outline: red 2px solid;
 }
+
 pre {
-  border-radius: 2px
+  border-radius: 2px;
+  max-width: 600px;
+}
+.buttonSection{
+  display: flex;
+  justify-content: space-between;
+  width: 600px;
 }
