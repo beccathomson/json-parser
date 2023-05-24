@@ -91,7 +91,6 @@ export const parseTree = (fileInput: string): BinTreeNode | null => {
     return null
   }
 
-  console.log(parsedInput)
   const parsedTree = parseBinaryTree(parsedInput);
   return parsedTree;
 };
