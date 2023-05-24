@@ -1,45 +1,37 @@
 import { BinTreeNode } from "./BinaryParser";
 
-function subtreeWithAllDeepest(root: BinTreeNode | null | undefined): [BinTreeNode | null | undefined, number] {
-    if (!root) return [null, 0];
+export function markDeepestSubtree(root: BinTreeNode): [BinTreeNode, number] {
+    let maxDepth = 0;
+    let deepestSubtreeRoot: BinTreeNode | null = null;
   
-    const [leftSubtree, leftDepth] = subtreeWithAllDeepest(root.left);
-    const [rightSubtree, rightDepth] = subtreeWithAllDeepest(root.right);
+    function dfs(node: BinTreeNode | null | undefined, depth: number): number {
+      if (!node) {
+        return depth;
+      }
   
-    if (leftDepth > rightDepth) {
-      return [leftSubtree, leftDepth + 1];
+      const leftDepth = dfs(node.left, depth + 1);
+      const rightDepth = dfs(node.right, depth + 1);
+  
+      if (leftDepth === rightDepth && leftDepth >= maxDepth) {
+        maxDepth = leftDepth;
+        deepestSubtreeRoot = node;
+      }
+  
+      return Math.max(leftDepth, rightDepth);
     }
   
-    if (leftDepth < rightDepth) {
-      return [rightSubtree, rightDepth + 1];
-    }
-  
-    return [root, leftDepth + 1];
+    dfs(root, 0);
+    markSubtree(deepestSubtreeRoot);
+    return [root, maxDepth];
   }
   
-  const getDepth = (node: BinTreeNode | null | undefined): number => {
-    if (!node) return 0;
-  
-    const left = getDepth(node.left);
-    const right = getDepth(node.right);
-  
-    return Math.max(left, right) + 1;
-  };
-  
-
-export function markSmallestDeepestSubtree(root: BinTreeNode): [BinTreeNode, number] {
-    const [subtree, maxDepth] = subtreeWithAllDeepest(root);
-    markNodesAsSubtree(subtree)
-    return [root, maxDepth]
-  }
-  
-  function markNodesAsSubtree(node: BinTreeNode | null | undefined): void {
+  function markSubtree(node: BinTreeNode| undefined | null): void {
     if (!node) {
       return;
     }
   
     node.isSubtree = true;
-    markNodesAsSubtree(node.left);
-    markNodesAsSubtree(node.right);
+    markSubtree(node.left);
+    markSubtree(node.right);
   }
   

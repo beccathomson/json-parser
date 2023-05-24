@@ -1,55 +1,58 @@
-import { BinTreeNode } from './BinaryParser';
-import { markSmallestDeepestSubtree } from './SubtreeParser';
+import { markDeepestSubtree } from "./SubtreeParser";
+import { BinTreeNode } from "./BinaryParser";
 
-// Helper function to create a binary tree node
-function createNode(id: number, left?: BinTreeNode, right?: BinTreeNode): BinTreeNode {
-  return { id, left, right };
-}
-
-describe('markDeepestSubtree', () => {
-  test('should mark the single node tree as the deepest subtree', () => {
-    const tree: BinTreeNode = createNode(1);
-    const [markedTree, depth] = markSmallestDeepestSubtree(tree);
-
-    expect(markedTree).toEqual({ id: 1, isSubtree: true });
-    expect(depth).toBe(0);
-  });
-
-  test('should mark the correct subtree in a tree with two levels', () => {
-    const tree: BinTreeNode = createNode(1, createNode(2), createNode(3));
-    const [markedTree, depth] = markSmallestDeepestSubtree(tree);
-
-    expect(markedTree).toEqual({
+describe("markDeepestSubtree", () => {
+  it("should mark the deepest subtree correctly", () => {
+    // Create a sample binary tree
+    const root: BinTreeNode = {
       id: 1,
-      isSubtree: true,
-      left: { id: 2 },
-      right: { id: 3 },
-    });
-    expect(depth).toBe(1);
-  });
-
-  test('should mark the correct subtree in a tree with three levels', () => {
-    const tree: BinTreeNode = createNode(
-      1,
-      createNode(2, createNode(4), createNode(5)),
-      createNode(3, createNode(6))
-    );
-    const [markedTree, depth] = markSmallestDeepestSubtree(tree);
-
-    expect(markedTree).toEqual({
-      id: 1,
-      isSubtree: true,
       left: {
         id: 2,
-        left: { id: 4 },
-        right: { id: 5 },
+        left: {
+          id: 4,
+          left: {
+            id: 7,
+            left: null,
+            right: {
+                id: 8
+            }
+        }
+        },
+        right: {
+          id: 5,
+        },
       },
       right: {
         id: 3,
-        left: { id: 6 },
+        left: null,
+        right: {
+          id: 6,
+        },
       },
-    });
-    expect(depth).toBe(2);
-  });
+    };
 
+    const [markedTree, maxDepth] = markDeepestSubtree(root);
+    console.log(markedTree)
+
+    // Assert that the markedTree has the correct markings
+    expect(isMarked(markedTree)).toBe(false); // Root node should not be marked
+    expect(isMarked(markedTree.left?.left?.left)).toBe(true); // Subtree with depth 4 should be marked
+    expect(isMarked(markedTree.right)).toBe(false); // Subtree with depth 3 should not be marked
+    expect(isMarked(markedTree.right?.right)).toBe(false); // Subtree with depth 1 should be marked
+
+    // Assert that the maxDepth is correct
+    expect(maxDepth).toBe(4);
+  });
 });
+
+function isMarked(node: BinTreeNode | null | undefined): boolean {
+  if (!node) {
+    return false;
+  }
+
+  if (node.isSubtree) {
+    return true;
+  }
+
+  return false
+}

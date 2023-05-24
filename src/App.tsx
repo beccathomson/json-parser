@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import FileUpload from './FileUpload';
-import { selectAppState, setBinaryTree } from './app.slice';
+import { selectAppState } from './app.slice';
 import { BinTreeNode, parseTree, parseTreeFromJson } from './BinaryParser';
 import VisualTree from './VisualTree';
 import './App.css';
@@ -11,7 +11,7 @@ const App = (): JSX.Element => {
   const [jsonText, setJsonText] = useState<string>("");
   const [isValidJson, setIsValidJson] = useState<boolean>(true);
   const [binaryTree, setBinaryTree] = useState<BinTreeNode | null>(null);
-  const [output, setOutput] = useState<BinTreeNode | null>(null);
+  const [editableOutput, setEditableOutput] = useState<string>();
 
   const handleNewText = (text: string): void => {
     try {
@@ -39,7 +39,7 @@ const App = (): JSX.Element => {
   useEffect(() => {
     const treeOutput = parseTree(fileInput); // Trim the JSON string to remove leading/trailing whitespaces
     if (treeOutput) {
-      setOutput(treeOutput);
+      setEditableOutput(JSON.stringify(treeOutput, null, 2));
       setBinaryTree(treeOutput);
     }
   }, [fileInput]);
@@ -48,7 +48,6 @@ const App = (): JSX.Element => {
     if (isValidJson) {
       const treeOutput = parseTreeFromJson(jsonText.trim()); // Trim the JSON string to remove leading/trailing whitespaces
       if (treeOutput) {
-        setOutput(treeOutput);
         setBinaryTree(treeOutput);
       }
     }
@@ -58,11 +57,11 @@ const App = (): JSX.Element => {
     <div>
       <FileUpload />
       <div className="outputArea">
-      {fileInput && <pre
+      {fileInput && <pre           className={isValidJson ? 'valid' : 'invalid'}
+><code
           contentEditable
           onInput={handleUserInput}
-          className={isValidJson ? 'valid' : 'invalid'}
-          >{JSON.stringify(output, null, 2)}</pre>}
+          >{editableOutput}</code></pre>}
 
       </div>
       {binaryTree && <VisualTree binaryTree={binaryTree} />}

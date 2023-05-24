@@ -1,6 +1,6 @@
 import React from 'react';
 import { BinTreeNode } from './BinaryParser';
-import { markSmallestDeepestSubtree } from './SubtreeParser';
+import { markDeepestSubtree } from './SubtreeParser';
 
 interface BinTreeNodeSquareProps {
   node: BinTreeNode;
@@ -32,7 +32,7 @@ const VisualTree: React.FC<{ binaryTree: BinTreeNode }> = ({ binaryTree }) => {
     return <div></div>;
   }
  
-  const [markedRoot, maxDepth] = markSmallestDeepestSubtree(binaryTree);
+  const [markedRoot, maxDepth] = markDeepestSubtree(binaryTree);
 
   const renderBinaryTreeNode = (node: BinTreeNode | null | undefined, level: number): JSX.Element | null => {
     if (!node || level === maxDepth) {

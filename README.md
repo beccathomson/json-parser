@@ -37,7 +37,7 @@ Project Structure
 -- src/utils/SubtreeParser.ts: This module contains the logic for finding the deepest subtree in a binary tree and marking the nodes as part of the subtree.
 -- src/App.tsx: The main entry point of the application. It handles file uploads, manages the state, and renders the components.
 Testing
--- Unit tests have been implemented for the findDeepestSubtree and markNodesAsGreen functions in the SubtreeParser.ts module. The tests cover various scenarios and edge cases to ensure the correct behavior of the functions.
+-- Unit tests have been implemented for the BinaryParser and SubTree parser main logic methods.
 
 To run the tests, use the following command:
 npm test

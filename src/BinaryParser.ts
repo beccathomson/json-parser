@@ -73,20 +73,19 @@ export const parseTreeFromJson = (jsonString: string): BinTreeNode | null => {
 
 // function takes initial file input array and returns BinTreeNode tree
 export const parseTree = (fileInput: string): BinTreeNode | null => {
-  console.log( )
-  if (! fileInput) {
+  if (!fileInput) {
     return null;
   }
 
   let parsedInput: ParserInputType | null = null;
   try {
     parsedInput = JSON.parse(fileInput ) as ParserInputType;
-    console.log(parsedInput)
   } catch (error) {
     console.error('Error parsing JSON string:', error);
     return null
   }
 
+  console.log(parsedInput)
   const parsedTree = parseBinaryTree(parsedInput);
   return parsedTree;
 };
